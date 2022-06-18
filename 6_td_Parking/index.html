@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>TD Parking</title>
+</head>
+<body>
+    <header>
+        <h1>Gestion Parkings</h1>
+        
+    </header>
+
+    <!-- ########## PARKING ##########-->
+
+    <div id="parkings">
+        <fieldset id="parkings_1">
+        <legend><strong>Lister les parkings</strong></legend>
+        <button id="button_parkings">Cliquez ici</button>
+        <p id="all_parkings"></p>
+        </fieldset>
+    </div>
+    <div id="parkings_id">
+        <fieldset>
+            <legend><strong>Parkings id</strong></legend>
+            <input type="text" id="parkings_by_id">
+            <button id="button_parkings_id">cliquez ici</button>
+            <p id="find_parking_by_id"></p>
+        </fieldset>
+    </div>
+    <div id="parking_supp">
+        <fieldset>
+            <legend><strong>Parking delete</strong></legend>
+            <input type="text" id="parking_supp_input">
+            <button id="button_parking_supp">cliquez ici</button>
+            <p id="parking_supp_by_id"></p>
+        </fieldset>
+    </div>
+    <div id="parking_add">
+        <fieldset>
+            <legend><strong>Add parking</strong></legend>
+            <input type="text" id="parking_add_input">
+            <button id="add_parking">cliquez ici</button>
+            <p id="parking_add_by_id"></p>
+        </fieldset>
+    </div>
+    <div id="parking_modif">
+        <fieldset>
+            <legend><strong>Modifier un parking</strong></legend>
+            <label for="parking_id">Parking id</label>
+            <input type="text" id="parking_id">
+            <label for="parking_name">Parking name</label>
+            <input type="text" id="parking_name">
+            <label for="parking_type">Parking type</label>
+            <input type="text" id="parking_type">
+            <label for="parking_city">Parking city</label>
+            <input type="text" id="parking_city">
+            <button id="button_modif">cliquez ici</button>
+            <p id="parking_modif_by_id"></p>
+        </fieldset>
+    </div>
+
+    <hr>
+
+<!-- ########## RESERVATION ##########-->
+    <div id="list_reservations">
+        <fieldset>
+            <legend><strong>Lister les réservations</strong></legend>
+            <button id="list_reserv_button">cliquez ici</button>
+            <p id="list_res"></p>
+        </fieldset>
+    </div>
+    <div id="make_reservation">
+        <fieldset>
+            <legend><strong>Prendre une réservation</strong></legend>
+            <input type="text" id="parking_add">
+            <button>cliquez ici</button>
+            <p id="parking_add_by_id"></p>
+        </fieldset>
+    </div>
+    <div id="show_reservation">
+        <fieldset>
+            <legend><strong>Afficher une réservation</strong></legend>
+            <input type="text" id="show_resa_id">
+            <button id="button_res_id">cliquez ici</button>
+            <p id="show_resa"></p>
+        </fieldset>
+    </div>
+    <div id="delete_reservation">
+        <fieldset>
+            <legend><strong>Supprimer une réservation</strong></legend>
+            <input type="text" id="delete_resa">
+            <button id="button_delete_resa">cliquez ici</button>
+            <p id="delete_confirm"></p>
+        </fieldset>
+    </div>
+
+    <script>
+    // Lister les parkings XMLHttpRequest #########################################################################
+    //déclaration des variables et action du bouton
+    let button = document.getElementById('button_parkings')
+    button.addEventListener('click', display)
+    function display() {
+        //requète xhr
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            //console.log(this)                               // Voir les état de la requète 1 à 4
+            if (this.readyState == 4 && this.status == 200) { // On vérifie que la requète est terminée & reponse prête "4", et que le status de serveur est à 200 "requète ok"
+                let myresponse = this.responseText            // responeText ou response cf.console.log(this)
+                //console.log(myresponse)
+                let all_Parkings = document.getElementById('all_parkings')
+                all_Parkings.innerHTML = myresponse
+            } else if (this.readyState == 4 && this.status == 404) {
+                alert('Erreur 404 :/')
+            }
+        }
+    xmlhttp.open("GET","http://localhost:8080/parkings", true)
+    xmlhttp.send()
+    }
+       
+    // Afficher un parking XMLHttpRequest ##########################################################################
+    //déclaration des variables et action du bouton
+    let button_parking_byId = document.getElementById('button_parkings_id')
+    let one_parking = document.getElementById("find_parking_by_id")
+    button_parking_byId.addEventListener('click', display2)
+    function display2() {
+        input_p = document.getElementById("parkings_by_id").value
+        if(input_p === "") {
+            one_parking.innerHTML = '<p>Entrez un id de Parking</p>'
+        } else {
+        url2 = "http://localhost:8080/parkings/"+input_p
+        //requète xhr
+        let xmlhttp1 = new XMLHttpRequest();
+        xmlhttp1.onreadystatechange = function(){
+            //console.log(this)                               // Voir les état de la requète 1 à 4
+            if (this.readyState == 4 && this.status == 200) { // On vérifie que la requète est terminée & reponse prête "4", et que le status de serveur est à 200 "requète ok"
+                let myresponse = this.responseText            // responeText ou response cf.console.log(this)
+                console.log(myresponse)
+                one_parking.innerHTML = myresponse
+            } else if (this.readyState == 4 && this.status == 404) {
+                alert('Erreur 404 :/')
+            }
+        }     
+        xmlhttp1.open("GET",url2, true)
+        xmlhttp1.send()
+        }
+    }
+
+    // Supprimer un parking XMLHttpRequest ##########################################################################
+    //déclaration des variables et action du bouton
+    let button_p_supp = document.getElementById('button_parking_supp')
+    let deleted_parking = document.getElementById('parking_supp_by_id')
+    button_p_supp.addEventListener('click', display3)
+    function display3() {
+        input_p_supp = document.getElementById("parking_supp_input").value
+        console.log(input_p_supp)
+        if(input_p_supp === "") {
+            deleted_parking.innerHTML = '<p>Entrez un id de Parking</p>'
+        } else {
+        url3 = "http://localhost:8080/parkings/delete/"+input_p_supp
+        //requète xhr
+        let xmlhttp3 = new XMLHttpRequest();
+        xmlhttp3.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200){
+                let myresponse = this.responseText
+                deleted_parking.innerHTML = myresponse + "liste bien mise à jour."
+            } else if (this.readyState == 4 && this.status == 404) {
+                alert('Erreur 404 :/')
+            }  
+        }
+        xmlhttp3.open("DELETE",url3, true)
+        xmlhttp3.send()
+        }
+    }
+
+    // Ajouter un parking XMLHttpRequest ##########################################################################
+    //déclaration des variables et action du bouton
+    let button_p_add = document.getElementById('add_parking')
+    let added_parking = document.getElementById('parking_add_by_id')
+    button_p_add.addEventListener('click', display4)
+    function display4() {
+        input_p_add = document.getElementById("parking_add_input").value
+        console.log(input_p_add)
+        if(input_p_add === "") {
+            added_parking.innerHTML = '<p>Entrez un nouveau parking</p>'
+        } else {
+        url4 = "http://localhost:8080/parkings/add/"
+        //requète xhr
+        let xmlhttp3 = new XMLHttpRequest();
+        xmlhttp3.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200){
+                let myresponse = this.responseText
+                added_parking.innerHTML = myresponse + "liste bien mise à jour."
+            } else if (this.readyState == 4 && this.status == 404) {
+                alert('Erreur 404 :/')
+            }  
+        }
+        xmlhttp3.open("POST",url4, true)
+        xmlhttp3.send(input_p_add) //donnée envoyée vers le serveur.
+        /*{
+        "id": "TEST",
+        "name":"Parking TEST",
+        "type": "AIRPORT TEST",
+        "city": "TEST"
+        }*/
+        }
+    }
+
+    //Modifier un parking XMLHttpRequest ##########################################################################
+    //déclaration des variables et action du bouton
+    let button_p_modif = document.getElementById('button_modif')
+    let modif_parking = document.getElementById('parking_modif_by_id')
+    button_p_modif.addEventListener('click', display5)
+    function display5() {
+        input_p_modif_id = document.getElementById("parking_id").value
+        input_p_modif_name = document.getElementById("parking_name").value
+        input_p_modif_type = document.getElementById("parking_type").value
+        input_p_modif_city = document.getElementById("parking_city").value
+        let data_to_send = {
+        "name": input_p_modif_name,
+        "type": input_p_modif_type,
+        "city": input_p_modif_city
+    }
+        //console.log(data_to_send)
+        if(input_p_modif_id === "" || input_p_modif_name === "" || input_p_modif_type === "" || input_p_modif_city === "") {
+            modif_parking.innerHTML = '<p>Remplissez les champs</p>'
+        } else {
+        url4 = "http://localhost:8080/parkings/modif/"+input_p_modif_id
+        //requète xhr
+        let xmlhttp4 = new XMLHttpRequest();
+        xmlhttp4.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200){
+                let myresponse = this.responseText
+                console.log(myresponse)
+                modif_parking.innerHTML = myresponse + "Parking modifié."
+            } else if (this.readyState == 4 && this.status == 404) {
+                alert('Erreur 404 :/')
+            }  
+        }
+        xmlhttp4.open("PATCH",url4, true)
+        xmlhttp4.setRequestHeader("Content-Type", "application/json;charset=UTF-8"); // pour dire au serveur q'on lui envoidu JSON.
+        xmlhttp4.send(JSON.stringify(data_to_send)) //donnée envoyée vers le serveur.
+        }
+    }
+
+//################################################ Réservations ##################################################
+//################################################################################################################
+
+    // Lister les réservations XMLHttpRequest #########################################################################
+    //déclaration des variables et action du bouton
+    let button_list_resa = document.getElementById('list_reserv_button')
+    button_list_resa.addEventListener('click', display_all_resa)
+    function display_all_resa() {
+        //requète xhr
+        let xmlhttp5 = new XMLHttpRequest();
+        xmlhttp5.onreadystatechange = function(){
+            //console.log(this)                               // Voir les état de la requète 1 à 4
+            if (this.readyState == 4 && this.status == 200) { // On vérifie que la requète est terminée & reponse prête "4", et que le status de serveur est à 200 "requète ok"
+                let myresponse = this.responseText            // responeText ou response cf.console.log(this)
+                //console.log(myresponse)
+                let all_resa = document.getElementById('list_res')
+                all_resa.innerHTML = myresponse
+            } else if (this.readyState == 4 && this.status == 404) {
+                alert('Erreur 404 :/')
+            }
+        }
+    xmlhttp5.open("GET","http://localhost:8080/parking/reservations", true)
+    xmlhttp5.send()
+    }
+
+    // Afficher une réservation XMLHttpRequest ##########################################################################
+    //déclaration des variables et action du bouton
+    let button_resa_id = document.getElementById("button_res_id")
+    let display_resa_by_id = document.getElementById("show_resa")
+    button_resa_id.addEventListener('click', display_one_resa)
+    function display_one_resa() {
+        input_res_id = document.getElementById("show_resa_id").value
+        if(input_res_id === "") {
+            display_resa_by_id.innerHTML = '<p>Entrez une id de réservation.</p>'
+        } else {
+        url6 = "http://localhost:8080/parking/reservations/"+input_res_id
+        //requète xhr
+        let xmlhttp6 = new XMLHttpRequest();
+        xmlhttp6.onreadystatechange = function(){
+            //console.log(this)                               // Voir les état de la requète 1 à 4
+            if (this.readyState == 4 && this.status == 200) { // On vérifie que la requète est terminée & reponse prête "4", et que le status de serveur est à 200 "requète ok"
+                let myresponse = this.responseText            // responeText ou response cf.console.log(this)
+                //console.log(myresponse)
+                display_resa_by_id.innerHTML = myresponse
+            } else if (this.readyState == 4 && this.status == 404) {
+                alert('Erreur 404 :/')
+            }
+        }     
+        xmlhttp6.open("GET",url6, true)
+        xmlhttp6.send()
+        }
+    }
+
+    // Supprimer une réservation XMLHttpRequest ##########################################################################
+    //déclaration des variables et action du bouton
+    let button_delete_resa = document.getElementById("button_delete_resa")
+    let deleted_resa = document.getElementById("delete_confirm")
+    button_delete_resa.addEventListener('click', display3)
+    function display3() {
+        input_resa_supp = document.getElementById("delete_resa").value
+        //console.log(input_resa_supp)
+        if(input_resa_supp === "") {
+            deleted_resa.innerHTML = '<p>Entrez une id de réservation</p>'
+        } else {
+        url7 = "http://localhost:8080/parking/reservations/delete/"+input_resa_supp
+        //requète xhr
+        let xmlhttp7 = new XMLHttpRequest();
+        xmlhttp7.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200){
+                let myresponse = this.responseText
+                deleted_resa.innerHTML = myresponse + "liste bien mise à jour."
+            } else if (this.readyState == 4 && this.status == 404) {
+                alert('Erreur 404 :/')
+            }  
+        }
+        xmlhttp7.open("DELETE",url7, true)
+        xmlhttp7.send()
+        }
+    }
+    </script>
+</body>
+</html>

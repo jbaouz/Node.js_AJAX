@@ -1,0 +1,18 @@
+TD d'application API nodeJS (sans DB) :
+
+presentation du projet :
+
+on veut faire la couche metier d'une société de gestion de parking qui prend des résas de ses clients et on note les fonctionnalités suivantes : 
+
+ 
+- Créer un parking
+- Lister l’ensemble des parkings
+- Récupérer les détails d’un parking en particulier
+- Supprimer un parking
+
+ 
+
+- Prendre une réservation d’une place dans un parking
+- Lister l’ensemble des réservations
+- Afficher les détails d’une réservation en particulier
+- Supprimer une réservation
