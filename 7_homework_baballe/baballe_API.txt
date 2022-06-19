@@ -1,0 +1,26 @@
+
+On désire mettre en ligne un service de réservation de billets de matchs de football. 
+Le service ne gère pas de base de données des utilisateurs : 
+un utilisateur est simplement identifié par un pseudo au moment de la réservation.
+Ecrivez cette API , en utilisant NodeJS, avec les ressources et les routes indispensables 
+(les tests seront effectués avec Postman/Insomnia et/ou des pages web ... )
+
+Les cas d'utilisation définis sont :
+
+- L'utilisateur consulte la liste des matches disponibles (les matches passés ne sont pas pris en compte ...)
+- L'utilisateur réserve une place pour un match avec un pseudo
+- L'utilisateur annule sa réservation (grâce à une id fournie)
+
+- Le gestionnaire du site consulte la liste des réservations pour un match.(en fournisant l'id du match)
+- Le gestionnaire du site crée une nouveau match (avec une requête POST + json formaté) 
+
+L'entité match est définie par :
+- sa date (et heure) 
+- son lieu
+- le nom du stade
+
+On prendra soin de créer au préalable un fichier .json avec une série de matches pour émuler un BDD et disposer de données
+Il n'y a donc pas de persistance des données.
+
+
+

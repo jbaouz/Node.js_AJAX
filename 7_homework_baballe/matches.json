@@ -1,0 +1,26 @@
+[
+    {
+        "id" : 1,
+        "date" : "1975-08-19T23:15:30.000Z",
+        "lieu" : "Montpellier",
+        "nom du stade" : "Stade de Montpellier"
+    },
+    {
+        "id" : 2,
+        "date" : "1982-05-30T23:15:30.000Z",
+        "lieu" : "Paris",
+        "nom du stade" : "Stade de Paris"
+    },
+    {
+        "id" : 3,
+        "date" : "2023-03-11T23:15:30.000Z",
+        "lieu" : "Lyon",
+        "nom du stade" : "Stade de Lyon"
+    },
+    {
+        "id" : 4,
+        "date" : "2023-06-03T20:10:30.000Z",
+        "lieu" : "Marseille",
+        "nom du stade" : "Stade de Marseille"
+    }
+]
