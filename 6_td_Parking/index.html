@@ -150,10 +150,11 @@
 
     // Supprimer un parking XMLHttpRequest ##########################################################################
     //déclaration des variables et action du bouton
-    let button_p_supp = document.getElementById('button_parking_supp')
+    let button_p_sup = document.getElementById("button_parking_supp")
     let deleted_parking = document.getElementById('parking_supp_by_id')
-    button_p_supp.addEventListener('click', display3)
+    button_p_sup.addEventListener('click', display3)
     function display3() {
+        console.log("caca")
         input_p_supp = document.getElementById("parking_supp_input").value
         console.log(input_p_supp)
         if(input_p_supp === "") {
@@ -302,8 +303,8 @@
     //déclaration des variables et action du bouton
     let button_delete_resa = document.getElementById("button_delete_resa")
     let deleted_resa = document.getElementById("delete_confirm")
-    button_delete_resa.addEventListener('click', display3)
-    function display3() {
+    button_delete_resa.addEventListener('click', display_delete_resa)
+    function display_delete_resa() {
         input_resa_supp = document.getElementById("delete_resa").value
         //console.log(input_resa_supp)
         if(input_resa_supp === "") {
